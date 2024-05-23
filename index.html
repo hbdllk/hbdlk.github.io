@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hbdlk's Personal Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth; /* CSS для плавного скроллинга */
+        }
+        header {
+            background-color: #333;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 20px;
+        }
+        header h1 {
+            margin: 0;
+            color: #fff;
+            font-size: 2em;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #222;
+            border-radius: 10px;
+            margin: 20px;
+        }
+        nav a {
+            color: #fff;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #444;
+            transform: scale(1.1);
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            background-color: #111;
+        }
+        .profile-pic {
+            display: block;
+            margin: 0 auto 20px;
+            border-radius: 10%;
+            width: 150px;
+            height: 150px;
+            transition: transform 0.3s ease;
+        }
+        .profile-pic:hover {
+            transform: scale(1.1);
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            color: #777b7e;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #777b7e;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>hbdlk</h1>
+</header>
+
+<nav>
+    <a href="#home">Главная</a>
+    <a href="#projects">Мои проекты</a>
+    <a href="#contact">Контакты</a>
+</nav>
+
+<section id="home">
+    <h2>Главная</h2>
+    <img src="https://yt3.googleusercontent.com/ey2-Oe62PIA2a0mmBmsrohsqydkuPjsoMBYxIw_0XCOroN-C5oCyBvZmCAr1fb_SKndM3nWtew=s900-c-k-c0x00ffffff-no-rj" alt="Profile Picture" class="profile-pic">
+    <p>Добро пожаловать на мою личную веб-страницу. Здесь вы найдете информацию обо мне и моих проектах.</p>
+</section>
+
+<section id="projects">
+    <h2>Мои проекты</h2>
+    <ul>
+        <li><a href="https://t.me/simpleto_dobot" target="_blank">ТГ Бот "Simple To-Do"</a></li>
+        <li><a href="https://t.me/hbdlks" target="_blank">ТГ Канал</a></li>
+        <li><a href="https://www.youtube.com/@hbdlk" target="_blank">Ютуб Канал</a></li>
+    </ul>
+</section>
+
+<section id="contact">
+    <h2>Контакты</h2>
+    <p>Свяжитесь со мной через телеграм: <a href="https://t.me/m/EXLvAXcyMjU6" style="color: #777b7e;">Написать</a></p>
+</section>
+
+<section id="about">
+    <p>&copy; 2024 hbdlk</p>
+</section>
+
+<script>
+    // JavaScript для плавного скроллинга
+    document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
