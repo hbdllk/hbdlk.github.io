@@ -7,11 +7,18 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #000;
-            color: #fff;
             margin: 0;
             padding: 0;
             scroll-behavior: smooth; /* CSS для плавного скроллинга */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        body.dark-mode {
+            background-color: #000;
+            color: #fff;
+        }
+        body.light-mode {
+            background-color: #fff;
+            color: #000;
         }
         header {
             background-color: #333;
@@ -19,18 +26,35 @@
             text-align: center;
             border-radius: 10px;
             margin: 20px;
+            transition: background-color 0.3s ease;
+        }
+        header.dark-mode {
+            background-color: #333;
+        }
+        header.light-mode {
+            background-color: #f0f0f0;
         }
         header h1 {
             margin: 0;
-            color: #fff;
             font-size: 2em;
         }
         nav {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             background-color: #222;
             border-radius: 10px;
             margin: 20px;
+            position: static;
+            transition: all 0.3s ease; /* Плавный переход */
+        }
+        nav.fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: 0;
+            border-radius: 0;
+            z-index: 1000;
         }
         nav a {
             color: #fff;
@@ -49,6 +73,13 @@
             margin: 20px;
             border-radius: 10px;
             background-color: #111;
+            transition: background-color 0.3s ease;
+        }
+        section.dark-mode {
+            background-color: #111;
+        }
+        section.light-mode {
+            background-color: #f0f0f0;
         }
         .profile-pic {
             display: block;
@@ -76,42 +107,91 @@
         a:hover {
             color: #777b7e;
         }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .side-menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1001;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        .side-menu a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+        .side-menu a:hover {
+            color: #f1f1f1;
+        }
+        .side-menu .close-btn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        .open-menu-btn {
+            font-size: 30px;
+            cursor: pointer;
+            color: #fff;
+            padding: 14px 20px;
+            text-align: center;
+        }
     </style>
 </head>
-<body>
+<body class="dark-mode">
 
-<header>
+<header class="dark-mode">
     <h1>hbdlk</h1>
 </header>
 
-<nav>
-    <a href="#home">Главная</a>
-    <a href="#projects">Мои проекты</a>
-    <a href="#contact">Контакты</a>
+<nav id="navbar" class="dark-mode">
+    <span class="open-menu-btn" onclick="openMenu()">&#9776;</span>
+    <a href="#home">Home</a>
+    <a href="#projects">Pack</a>
+    <a href="#contact">Write</a>
 </nav>
 
-<section id="home">
-    <h2>Главная</h2>
-    <img src="https://yt3.googleusercontent.com/ey2-Oe62PIA2a0mmBmsrohsqydkuPjsoMBYxIw_0XCOroN-C5oCyBvZmCAr1fb_SKndM3nWtew=s900-c-k-c0x00ffffff-no-rj" alt="Profile Picture" class="profile-pic">
-    <p>Добро пожаловать на мою личную веб-страницу. Здесь вы найдете информацию обо мне и моих проектах.</p>
+<div id="sideMenu" class="side-menu">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+    <a href="#" onclick="toggleTheme()">Change mode</a>
+</div>
+
+<section id="home" class="dark-mode">
+    <h2>Home</h2>
+    <img src="https://i.postimg.cc/vT4VCpXY/1000004461-x16-drawing.jpg" alt="Profile Picture" class="profile-pic">
+    <p>Hi. Here you can read something about me</p>
 </section>
 
-<section id="projects">
-    <h2>Мои проекты</h2>
+<section id="projects" class="dark-mode">
+    <h2>My simply projects</h2>
     <ul>
-        <li><a href="https://t.me/simpleto_dobot" target="_blank">ТГ Бот "Simple To-Do"</a></li>
-        <li><a href="https://t.me/hbdlks" target="_blank">ТГ Канал</a></li>
-        <li><a href="https://www.youtube.com/@hbdlk" target="_blank">Ютуб Канал</a></li>
+        <li><a href="https://t.me/simpleto_dobot" target="_blank">Telegram Bot "Simple To-Do"</a></li>
+        <li><a href="https://t.me/hbdlks" target="_blank">Telegram Channel</a></li>
+        <li><a href="https://www.youtube.com/@hbdlk" target="_blank">Youtube Channel</a></li>
     </ul>
 </section>
 
-<section id="contact">
-    <h2>Контакты</h2>
-    <p>Свяжитесь со мной через телеграм: <a href="https://t.me/m/EXLvAXcyMjU6" style="color: #777b7e;">Написать</a></p>
+<section id="contact" class="dark-mode">
+    <h2>Contacts</h2>
+    <p>You can connect with me in telegram: <a href="https://t.me/m/EXLvAXcyMjU6" style="color: #777b7e;">Write</a></p>
 </section>
 
-<section id="about">
-    <p>&copy; 2024 hbdlk</p>
+<section id="about" class="dark-mode">
+    <h2>About me</h2>
+    <p>Hello where, I'm hbdlk! Here I posting.</p>
+    <p class="footer">&copy; 2024 hbdlk</p>
 </section>
 
 <script>
@@ -119,13 +199,46 @@
     document.querySelectorAll('nav a').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-
             document.querySelector(this.getAttribute('href')).scrollIntoView({
                 behavior: 'smooth'
             });
         });
     });
+
+    // JavaScript для фиксированной навигации при прокрутке
+    window.addEventListener('scroll', function() {
+        const navbar = document.getElementById('navbar');
+        const header = document.querySelector('header');
+        const sticky = header.offsetHeight + 20; // Рассчитываем позицию для фиксации с учетом отступов
+
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add('fixed');
+        } else {
+            navbar.classList.remove('fixed');
+        }
+    });
+
+    // Открытие и закрытие бокового меню
+    function openMenu() {
+        document.getElementById('sideMenu').style.width = '250px';
+    }
+
+    function closeMenu() {
+        document.getElementById('sideMenu').style.width = '0';
+    }
+
+    // Смена темы
+    function toggleTheme() {
+        const elements = document.querySelectorAll('body, header, nav, section');
+        elements.forEach(element => {
+            element.classList.toggle('dark-mode');
+            element.classList.toggle('light-mode');
+        });
+        closeMenu();
+    }
 </script>
 
+</body>
+</html>
 </body>
 </html>
