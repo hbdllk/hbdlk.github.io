@@ -1,3 +1,3 @@
 HELLO
 
-I'm begginer, whos using ChatGPT for his projects
+I'm begginer. И я русский
