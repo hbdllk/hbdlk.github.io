@@ -50,6 +50,27 @@
             color: #fff;
             font-size: 20px;
         }
+        .c-button {
+          appearance: none;
+          border: 0;
+          border-radius: 5px;
+          background: #777b7e;
+          color: #fff;
+          padding: 8px 16px;
+          font-size: 16px;
+          min-width: 100px;
+          margin: 20px;
+          position: static;
+          transition: all 0.3s ease;
+        }
+        .c-button:hover {
+          background: #363636;
+          transform: scale(1.05);
+        }
+        .c-button:focus {
+          outline: none;
+          transform: scale(1.05);
+        }
         nav {
             display: flex;
             justify-content: space-between;
@@ -167,7 +188,9 @@
 
 <section id="products" class="dark-mode">
     <h2>Продукты</h2>
-    <p><a href="https://hbdlk.ru/products" style="color: #777b7e;">Перейти...</a></p>
+    <button class="c-button" onclick="window.location.href = 'https://hbdlk.ru/products';">
+        Перейти
+      </button>
 </section>
 
 <section id="contact" class="dark-mode">
