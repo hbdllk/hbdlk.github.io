@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заметки и задачи</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color, #eff0f4);
+            color: var(--text-color, #4a4a4a);
+            transition: background-color 0.5s, color 0.5s;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: var(--heading-color, #4a4a4a);
+        }
+        button {
+            background-color: var(--button-bg-color, #0088cc);
+            color: var(--button-text-color, #fff);
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            margin: 8px 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: var(--button-hover-bg-color, #005580);
+        }
+        .note, .task {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: var(--note-bg-color, #ebebeb);
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .task {
+            background-color: var(--task-bg-color, #eff7ff);
+        }
+        .hidden {
+            display: none;
+        }
+        label {
+            display: block;
+            margin-top: 8px;
+            color: var(--label-color, #666);
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button[type="button"] {
+            width: 100%;
+            background-color: var(--button-bg-color, #0088cc);
+            color: var(--button-text-color, #fff);
+            border: none;
+            border-radius: 4px;
+            padding: 8px 0;
+            margin-top: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button[type="button"]:hover {
+            background-color: var(--button-hover-bg-color, #005580);
+        }
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 90%;
+            }
+            input[type="text"], textarea {
+                width: calc(100% - 16px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Заметки и задачи</h1>
+        <button onclick="showNotes()">Заметки</button>
+        <button onclick="showTasks()">Задачи</button>
+
+        <div id="notes" class="notes">
+            <!-- Будет заполнено JavaScript -->
+        </div>
+
+        <div id="tasks" class="tasks hidden">
+            <!-- Будет заполнено JavaScript -->
+        </div>
+
+        <!-- Форма для добавления новых заметок и задач -->
+        <form id="addForm">
+            <label for="type">Выберите тип:</label>
+            <select id="type">
+                <option value="note">Заметка</option>
+                <option value="task">Задача</option>
+            </select>
+            <label for="title">Заголовок:</label>
+            <input type="text" id="title" required>
+            <label for="content">Содержание:</label>
+            <textarea id="content" required></textarea>
+            <button type="button" onclick="addNoteOrTask()">Добавить</button>
+        </form>
+    </div>
+
+    <script>// При загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Восстанавливаем заметки и задачи из локального хранилища
+            restoreData();
+            // Восстанавливаем тему из локального хранилища
+            restoreTheme();
+        });
+
+        function showNotes() {
+            document.getElementById("notes").classList.remove("hidden");
+            document.getElementById("tasks").classList.add("hidden");
+        }
+
+        function showTasks() {
+            document.getElementById("tasks").classList.remove("hidden");
+            document.getElementById("notes").classList.add("hidden");
+        }
+
+        function addNoteOrTask() {
+            var type = document.getElementById("type").value;
+            var title = document.getElementById("title").value;
+            var content = document.getElementById("content").value;
+
+            var newItem = document.createElement("div");
+            newItem.classList.add(type);
+
+            var newHeader = document.createElement("h2");
+            newHeader.textContent = title;
+
+            var newContent = document.createElement("p");
+            newContent.textContent = content;
+
+            var deleteButton = document.createElement("button");
+            deleteButton.textContent = "Удалить";
+            deleteButton.onclick = function() {
+                this.parentNode.remove();
+                saveData();
+            };
+
+            newItem.appendChild(newHeader);
+            newItem.appendChild(newContent);
+            newItem.appendChild(deleteButton);
+
+            if (type === "note") {
+                document.getElementById("notes").appendChild(newItem);
+            } else {
+                document.getElementById("tasks").appendChild(newItem);
+            }
+
+            // Сохраняем данные в локальное хранилище
+            saveData();
+        }
+
+        function saveData() {
+            var notes = document.getElementById("notes").innerHTML;
+            var tasks = document.getElementById("tasks").innerHTML;
+            localStorage.setItem('notes', notes);
+            localStorage.setItem('tasks', tasks);
+        }
+
+        function restoreData() {
+            var notes = localStorage.getItem('notes');
+            var tasks = localStorage.getItem('tasks');
+            if (notes) {
+                document.getElementById("notes").innerHTML = notes;
+            }
+            if (tasks) {
+                document.getElementById("tasks").innerHTML = tasks;
+            }
+        }
+    </script>
+</body>
+</html>
