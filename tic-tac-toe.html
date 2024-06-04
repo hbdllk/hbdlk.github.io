@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Крестики-нолики</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #E0E0E0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #1F1F1F;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #E0E0E0;
+        }
+
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #A0A0A0;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: #2E2E2E;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .cell:hover {
+            background-color: #3E3E3E;
+        }
+
+        .cell:empty:hover {
+            transform: scale(1.05);
+        }
+
+        .cell span {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .cell span.visible {
+            opacity: 1;
+        }
+
+        #reset-button {
+            background-color: #007AFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #reset-button:hover {
+            background-color: #005BB5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Крестики-нолики</h1>
+        <div class="scoreboard">
+            <span>Вы: <span id="player-score">0</span></span>
+            <span>Бот: <span id="bot-score">0</span></span>
+        </div>
+        <div class="board" id="board">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+        <button id="reset-button">Сбросить</button>
+    </div>
+    <script>
+        const board = document.getElementById('board');
+        const cells = Array.from(document.getElementsByClassName('cell'));
+        const playerScoreEl = document.getElementById('player-score');
+        const botScoreEl = document.getElementById('bot-score');
+        const resetButton = document.getElementById('reset-button');
+
+        let playerScore = 0;
+        let botScore = 0;
+        let currentPlayer = 'X';
+        let gameActive = true;
+        let boardState = Array(9).fill(null);
+
+        const winningCombinations = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        function handleCellClick(e) {
+            const index = e.target.getAttribute('data-index');
+            if (boardState[index] || !gameActive) {
+                return;
+            }
+            boardState[index] = currentPlayer;
+            e.target.innerHTML = `<span class="visible">${currentPlayer}</span>`;
+            checkResult();
+            if (gameActive) {
+                currentPlayer = 'O';
+                setTimeout(botMove, 500); // Pause for bot's thinking time
+            }
+        }
+
+        function botMove() {
+            const bestMove = getBestMove();
+            boardState[bestMove] = currentPlayer;
+            cells[bestMove].innerHTML = `<span class="visible">${currentPlayer}</span>`;
+            checkResult();
+            if (gameActive) {
+                currentPlayer = 'X';
+            }
+        }
+
+        function getBestMove() {
+            for (let i = 0; i < boardState.length; i++) {
+                if (boardState[i] === null) {
+                    boardState[i] = currentPlayer;
+                    if (checkWin(currentPlayer)) {
+                        boardState[i] = null;
+                        return i;
+                    }
+                    boardState[i] = null;
+                }
+            }
+
+            for (let i = 0; i < boardState.length; i++) {
+                if (boardState[i] === null) {
+                    boardState[i] = 'X';
+                    if (checkWin('X')) {
+                        boardState[i] = null;
+                        return i;
+                    }
+                    boardState[i] = null;
+                }
+            }
+
+            const emptyCells = boardState.map((value, index) => value === null ? index : null).filter(val => val !== null);
+            return emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        }
+
+        function checkWin(player) {
+            return winningCombinations.some(combination => {
+                return combination.every(index => boardState[index] === player);
+            });
+        }
+
+        function checkResult() {
+            if (checkWin(currentPlayer)) {
+                if (currentPlayer === 'X') {
+                    playerScore++;
+                    playerScoreEl.textContent = playerScore;
+                } else {
+                    botScore++;
+                    botScoreEl.textContent = botScore;
+                }
+                gameActive = false;
+            } else if (!boardState.includes(null)) {
+                gameActive = false;
+            }
+        }
+
+        function resetGame() {
+            currentPlayer = 'X';
+            gameActive = true;
+            boardState.fill(null);
+            cells.forEach(cell => cell.innerHTML = '');
+        }
+
+        cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+        resetButton.addEventListener('click', resetGame);
+    </script>
+</body>
+</html>
