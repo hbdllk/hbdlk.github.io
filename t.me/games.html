@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="hbdlk Games">
+    <meta property="og:site_name" content="hbdlk.ru">
+    <meta property="og:url" content="https://hbdlk.ru/">
+    <meta property="og:description" content="Главная страница игр hbdlk">
+    <meta property="og:image" content="https://i.postimg.cc/jdVmWygK/favicon.jpg">
+    <meta property="og:image:width" content="16"/>
+    <meta property="og:image:height" content="16"/>
+    <title>hbdlk - Игры</title>
+    <link rel="shortcut icon" href="https://i.postimg.cc/jdVmWygK/favicon.jpg" type="image/jpg">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        body.dark-mode {
+            background-color: #000;
+            color: #fff;
+        }
+        body.light-mode {
+            background-color: #fff;
+            color: #000;
+        }
+        header {
+            background-color: #333;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 20px;
+            transition: background-color 0.3s ease;
+            position: relative;
+        }
+        header.dark-mode {
+            background-color: #333;
+        }
+        header.light-mode {
+            background-color: #f0f0f0;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            display: inline-block;
+        }
+        header h1 a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .theme-toggle-btn {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #fff;
+            font-size: 20px;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            border-radius: 10px;
+            margin: 20px;
+            position: static;
+            transition: all 0.3s ease;
+        }
+        nav.dark-mode {
+            background-color: #222;
+        }
+        nav.light-mode {
+            background-color: #f0f0f0;
+        }
+        nav.fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: 0;
+            border-radius: 0;
+            z-index: 1000;
+        }
+        nav a {
+            color: #fff;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        nav.dark-mode a {
+            color: #fff;
+        }
+        nav.light-mode a {
+            color: #000;
+        }
+        nav a:hover {
+            background-color: #444;
+            transform: scale(1.1);
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            background-color: #111;
+            transition: background-color 0.3s ease;
+        }
+        section.dark-mode {
+            background-color: #111;
+        }
+        section.light-mode {
+            background-color: #f0f0f0;
+        }
+        .game-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 10px;
+            background-color: #222;
+            padding: 20px;
+            margin: 20px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            color: #fff;
+        }
+        .game-card:hover {
+            transform: scale(1.05);
+            background-color: #333;
+        }
+        .game-card img {
+            border-radius: 10px;
+            width: 100%;
+            height: auto;
+            max-width: 300px;
+        }
+        .game-card h3 {
+            margin: 15px 0 10px;
+        }
+        .game-card p {
+            margin: 0;
+            text-align: center;
+        }
+        .c-button {
+            appearance: none;
+            border: 0;
+            border-radius: 5px;
+            background: #777b7e;
+            color: #fff;
+            padding: 8px 16px;
+            font-size: 16px;
+            min-width: 100px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .c-button:hover {
+            background: #363636;
+            transform: scale(1.05);
+        }
+        .c-button:focus {
+            outline: none;
+            transform: scale(1.05);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+
+<header class="dark-mode">
+    <h1><a href="https://hbdlk.ru">Игры</a></h1>
+    <div class="theme-toggle-btn" onclick="toggleTheme()">🌙</div>
+</header>
+
+<nav id="navbar" class="dark-mode">
+    <a href="#home">Главная</a>
+    <a href="#games">Игры</a>
+    <a href="#contact">Контакты</a>
+</nav>
+
+<section id="home" class="dark-mode">
+    <h2>Добро пожаловать на страницу моих игр</h2>
+    <p>Здесь вы найдете информацию о всех моих проектах и сможете перейти к ним для ознакомления и игры.</p>
+</section>
+
+<section id="games" class="dark-mode">
+    <h2>Мои игры</h2>
+    <div class="game-card">
+        <img src="https://i.postimg.cc/Hk9Twtt5/tictactoe.jpg" alt="Game 1">
+        <h3>Крестики-Нолики</h3>
+        <p>Классическая игра в крестики и нолики. Но против вас будет Бот, который будет пытатся не дать вам выиграть!</p>
+        <a href="https://t.me/hbdgamebot/tictactoe" target="_blank" class="c-button">Играть</a>
+    </div>
+</section>
+
+<section id="contact" class="dark-mode">
+    <h2>Контакты</h2>
+    <p>Свяжитесь со мной с помощью:</p>
+    <p>Телеграм - <a href="https://t.me/m/EXLvAXcyMjU6" style="color: #777b7e;">Написать</a></p>
+    <p>ВКонтакте - <a href="https://vk.com/@hbdlk" style="color: #777b7e;">Профиль</a></p>
+</section>
+
+<section id="about" class="dark-mode">
+    <h2>Good luck</h2>
+    <p class="footer">&copy; 2024 hbdlk</p>
+</section>
+
+<script>
+    // JavaScript для плавного скроллинга
+    document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // JavaScript для фиксированной навигации при прокрутке
+    window.addEventListener('scroll', function() {
+        const navbar = document.getElementById('navbar');
+        const header = document.querySelector('header');
+        const sticky = header.offsetHeight + 20;
+
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add('fixed');
+        } else {
+            navbar.classList.remove('fixed');
+        }
+    });
+
+    // Смена темы
+    function toggleTheme() {
+        const elements = document.querySelectorAll('body, header, nav, section, .game-card');
+        elements.forEach(element => {
+            element.classList.toggle('dark-mode');
+            element.classList.toggle('light-mode');
+        });
+    }
+</script>
+
+</body>
+</html>
