@@ -8,8 +8,8 @@
     <meta property="og:url" content="https://hbdlk.ru/">
     <meta property="og:description" content="Личная страница hbdlk">
     <meta property="og:image" content="https://i.postimg.cc/jdVmWygK/favicon.jpg">
-    <meta property="og:image:width" content="16"/>
-    <meta property="og:image:height" content="16"/>
+    <meta property="og:image:width" content="16">
+    <meta property="og:image:height" content="16">
     <title>hbdlk</title>
     <link rel="shortcut icon" href="https://i.postimg.cc/jdVmWygK/favicon.jpg" type="image/jpg">
     <style>
@@ -58,25 +58,25 @@
             font-size: 20px;
         }
         .c-button {
-          appearance: none;
-          border: 0;
-          border-radius: 5px;
-          background: #777b7e;
-          color: #fff;
-          padding: 8px 16px;
-          font-size: 16px;
-          min-width: 100px;
-          margin: 0px;
-          position: static;
-          transition: all 0.3s ease;
+            appearance: none;
+            border: 0;
+            border-radius: 5px;
+            background: #777b7e;
+            color: #fff;
+            padding: 8px 16px;
+            font-size: 16px;
+            min-width: 100px;
+            margin: 0;
+            position: static;
+            transition: all 0.3s ease;
         }
         .c-button:hover {
-          background: #363636;
-          transform: scale(1.05);
+            background: #363636;
+            transform: scale(1.05);
         }
         .c-button:focus {
-          outline: none;
-          transform: scale(1.05);
+            outline: none;
+            transform: scale(1.05);
         }
         nav {
             display: flex;
@@ -219,7 +219,7 @@
     <section id="projects" class="dark-mode">
         <h2>Мои проекты</h2>
         <ul>
-            <li><a href="https://t.me/chathbdbot" target="_blank">ТГ Бот с Исскуственным Интелектом</a></li>
+            <li><a href="https://t.me/chathbdbot" target="_blank">ТГ Бот с Искусственным Интеллектом</a></li>
             <li><a href="https://t.me/hbdllk" target="_blank">ТГ Канал</a></li>
             <li><a href="https://www.youtube.com/@hbdlk" target="_blank">Ютуб Канал</a></li>
             <li>А дальше -> больше...</li>
@@ -259,15 +259,6 @@
             }
         });
 
-        // Открытие и закрытие бокового меню
-        function openMenu() {
-            document.getElementById('sideMenu').style.width = '250px';
-        }
-
-        function closeMenu() {
-            document.getElementById('sideMenu').style.width = '0';
-        }
-
         // Смена темы
         function toggleTheme() {
             const elements = document.querySelectorAll('body, header, nav, section');
@@ -275,7 +266,6 @@
                 element.classList.toggle('dark-mode');
                 element.classList.toggle('light-mode');
             });
-            closeMenu();
         }
 
         // Скрытие preloader после загрузки страницы
