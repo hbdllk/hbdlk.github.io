@@ -79,50 +79,52 @@
         }
     </style>
     <script>
-        async function postJob(event) {
-            event.preventDefault();
-            const jobTitle = document.getElementById('job-title').value;
-            const companyName = document.getElementById('company-name').value;
-            const location = document.getElementById('location').value;
-            const description = document.getElementById('description').value;
+    const apiBaseUrl = 'https://hoabadik.pythonanywhere.com';  // Укажите URL вашего приложения на PythonAnywhere
 
-            const response = await fetch('/post-job', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    jobTitle,
-                    companyName,
-                    location,
-                    description
-                })
-            });
-            const result = await response.json();
-            alert(result.message);
-        }
+    async function postJob(event) {
+        event.preventDefault();
+        const jobTitle = document.getElementById('job-title').value;
+        const companyName = document.getElementById('company-name').value;
+        const location = document.getElementById('location').value;
+        const description = document.getElementById('description').value;
 
-        async function submitResume(event) {
-            event.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const resume = document.getElementById('resume').value;
+        const response = await fetch(${apiBaseUrl}/post-job, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                jobTitle,
+                companyName,
+                location,
+                description
+            })
+        });
+        const result = await response.json();
+        alert(result.message);
+    }
 
-            const response = await fetch('/submit-resume', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    resume
-                })
-            });
-            const result = await response.json();
-            alert(result.message);
-        }
-    </script>
+    async function submitResume(event) {
+        event.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const resume = document.getElementById('resume').value;
+
+        const response = await fetch(${apiBaseUrl}/submit-resume, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                resume
+            })
+        });
+        const result = await response.json();
+        alert(result.message);
+    }
+</script>
 </head>
 
 <body>
