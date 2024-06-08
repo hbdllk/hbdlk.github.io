@@ -51,22 +51,53 @@
             color: #666;
         }
     </style>
-    <script>
-        async function loadJobs() {
-            const response = await fetch('/jobs');
-            const jobs = await response.json();
-            const jobsContainer = document.getElementById('jobs-container');
-            jobsContainer.innerHTML = jobs.map(job => 
-                <div class="job">
-                    <h2>${job.jobTitle}</h2>
-                    <p><strong>Company:</strong> ${job.companyName}</p>
-                    <p><strong>Location:</strong> ${job.location}</p>
-                    <p>${job.description}</p>
-                </div>
-            ).join('');
-        }
-        window.onload = loadJobs;
-    </script>
+   <script>
+    const apiBaseUrl = 'https://hoabadik.pythonanywhere.com';  // Укажите URL вашего приложения на PythonAnywhere
+
+    async function postJob(event) {
+        event.preventDefault();
+        const jobTitle = document.getElementById('job-title').value;
+        const companyName = document.getElementById('company-name').value;
+        const location = document.getElementById('location').value;
+        const description = document.getElementById('description').value;
+
+        const response = await fetch(${apiBaseUrl}/post-job, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                jobTitle,
+                companyName,
+                location,
+                description
+            })
+        });
+        const result = await response.json();
+        alert(result.message);
+    }
+
+    async function submitResume(event) {
+        event.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const resume = document.getElementById('resume').value;
+
+        const response = await fetch(${apiBaseUrl}/submit-resume, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                resume
+            })
+        });
+        const result = await response.json();
+        alert(result.message);
+    }
+</script>
 </head>
 <body>
 
