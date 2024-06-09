@@ -216,6 +216,27 @@
         .comment-text {
             margin-top: 5px;
         }
+        .comment-form {
+            margin-top: 20px;
+        }
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #222;
+            color: #fff;
+        }
+        .comment-form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #777b7e;
+            color: #fff;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="dark-mode">
@@ -250,10 +271,10 @@
     </section>
     <section id="blog" class="dark-mode">
         <h2>Блог</h2>
-        <div class="post">
-            <div class="post-title">Мой первый пост</div>
-            <div class="post-content">Это содержимое моего первого поста. Добро пожаловать на мой блог!</div>
-            <div class="comments">
+        <div class="post" id="post1">
+            <div class="post-title">Первый пост</div>
+            <div class="post-content">Это мой первый пост в блоге. Добро пожаловать!</div>
+            <div class="comments" id="comments-post1">
                 <div class="comment">
                     <div class="comment-author">Пользователь 1</div>
                     <div class="comment-text">Отличный пост!</div>
@@ -262,6 +283,23 @@
                     <div class="comment-author">Пользователь 2</div>
                     <div class="comment-text">Спасибо за информацию.</div>
                 </div>
+            </div>
+            <div class="comment-form">
+                <input type="text" id="author-post1" placeholder="Ваше имя">
+                <textarea id="text-post1" rows="4" placeholder="Ваш комментарий"></textarea>
+                <button onclick="addComment('post1')">Добавить комментарий</button>
+            </div>
+        </div>
+        <div class="post" id="post2">
+            <div class="post-title">Второй пост</div>
+            <div class="post-content">Это мой второй пост в блоге. Надеюсь, вам нравится контент!</div>
+            <div class="comments" id="comments-post2">
+                <!-- Комментарии для второго поста будут добавляться здесь -->
+            </div>
+            <div class="comment-form">
+                <input type="text" id="author-post2" placeholder="Ваше имя">
+                <textarea id="text-post2" rows="4" placeholder="Ваш комментарий"></textarea>
+                <button onclick="addComment('post2')">Добавить комментарий</button>
             </div>
         </div>
     </section>
@@ -312,6 +350,69 @@
                 preloader.style.display = 'none';
             }, 500);
         });
+
+        function addComment(postId) {
+            const authorInput = document.getElementById(`author-${postId}`);
+            const textInput = document.getElementById(`text-${postId}`);
+            const commentsContainer = document.getElementById(`comments-${postId}`);
+
+            if (authorInput.value && textInput.value) {
+                const newComment = document.createElement('div');
+                newComment.classList.add('comment');
+
+                const newAuthor = document.createElement('div');
+                newAuthor.classList.add('comment-author');
+                newAuthor.textContent = authorInput.value;
+
+                const newText = document.createElement('div');
+                newText.classList.add('comment-text');
+                newText.textContent = textInput.value;
+
+                newComment.appendChild(newAuthor);
+                newComment.appendChild(newText);
+                commentsContainer.appendChild(newComment);
+
+                authorInput.value = '';
+                textInput.value = '';
+
+                saveComment(postId, newAuthor.textContent, newText.textContent);
+            }
+        }
+
+        function saveComment(postId, author, text) {
+            let comments = JSON.parse(localStorage.getItem(postId)) || [];
+            comments.push({ author, text });
+            localStorage.setItem(postId, JSON.stringify(comments));
+        }
+
+        function loadComments() {
+            document.querySelectorAll('.post').forEach(post => {
+                const postId = post.id;
+                const commentsContainer = document.getElementById(`comments-${postId}`);
+                let comments = JSON.parse(localStorage.getItem(postId)) || [];
+
+                comments.forEach(comment => {
+                    const newComment = document.createElement('div');
+                    newComment.classList.add('comment');
+
+                    const newAuthor = document.createElement('div');
+                    newAuthor.classList.add('comment-author');
+                    newAuthor.textContent = comment.author;
+
+                    const newText = document.createElement('div');
+                    newText.classList.add('comment-text');
+                    newText.textContent = comment.text;
+
+                    newComment.appendChild(newAuthor);
+                    newComment.appendChild(newText);
+                    commentsContainer.appendChild(newComment);
+                });
+            });
+        }
+
+        window.onload = function() {
+            loadComments();
+        }
     </script>
 </body>
 </html>
