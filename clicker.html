@@ -101,12 +101,12 @@
     </style>
 </head>
 <body>
-    <h1>Кликер</h1>
-    <button class="click-button" id="clickButton">Кликни меня!</button>
+    <h1>HBD Coins</h1>
+    <button class="click-button" id="clickButton">Press me!</button>
     <section>
-    <div class="score">Очки: <span id="score">0</span></div>
+    <div class="score">Score: <span id="score">0</span></div>
     </section>
-    <button class="upgrade-button" id="upgradeButton">Купить авто-клик (10 очков)</button>
+    <button class="upgrade-button" id="upgradeButton">Buy auto-clicker (10 points)</button>
 
     <script>
         let score = 0;
@@ -172,7 +172,7 @@
         }
 
         function updateUpgradeButton() {
-            upgradeButton.innerText = `Купить авто-клик (${autoClickerCost} очков)`;
+            upgradeButton.innerText = `Buy auto-clicker (${autoClickerCost} points)`;
             upgradeButton.disabled = score < autoClickerCost;
         }
 
