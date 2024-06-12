@@ -98,7 +98,20 @@
             color: #000000;
             transform: scale(0.95);
         }
+        .close-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #ff4444;
+            border: none;
+            padding: 10px 20px;
+            color: #ffffff;
+            cursor: pointer;
+            border-radius: 15px;
+            font-size: 20px;
+        }
     </style>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <h1>HBD Coins</h1>
@@ -107,6 +120,7 @@
     <div class="score"><span id="score">0</span></div>
     </section>
     <button class="upgrade-button" id="upgradeButton">Buy auto-clicker for 10</button>
+    <button class="close-button" id="closeButton">Close</button>
 
     <script>
         let score = 0;
@@ -117,6 +131,7 @@
         const clickButton = document.getElementById('clickButton');
         const scoreDisplay = document.getElementById('score');
         const upgradeButton = document.getElementById('upgradeButton');
+        const closeButton = document.getElementById('closeButton');
 
         function loadGame() {
             const savedScore = localStorage.getItem('score');
@@ -167,6 +182,10 @@
             }
         });
 
+        closeButton.addEventListener('click', () => {
+            Telegram.WebApp.close();
+        });
+
         function updateScore() {
             scoreDisplay.innerText = score;
         }
@@ -186,6 +205,20 @@
                 }, 1000);
             }
         }
+
+        function initTelegramWebApp() {
+            const tg = window.Telegram.WebApp;
+            tg.expand(); // Open the web app in expanded mode
+            tg.MainButton.hide(); // Hide the main button if shown
+
+            // Prevent closing by swipe down on iOS
+            tg.disableClosingConfirmation();
+
+            // Show the close button
+            closeButton.style.display = 'block';
+        }
+
+        Telegram.WebApp.ready(initTelegramWebApp);
 
         loadGame();
     </script>
