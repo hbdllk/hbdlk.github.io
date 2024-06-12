@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Clicker">
+    <meta property="og:site_name" content="Clicker">
+    <meta property="og:url" content="https://hbdlk.ru/clicker">
+    <meta property="og:description" content="Кликер">
+    <meta property="og:image" content="favicon.png">
+    <meta property="og:image:width" content="16"/>
+    <meta property="og:image:height" content="16"/>
+    <title>hbdlk - Игры</title>
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
+    <title>Кликер</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            -ms-user-select: none; 
+            -moz-user-select: none; 
+            -webkit-user-select: none; 
+            user-select: none;
+        }
+        h1 {
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        .click-button {
+            background-color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            width: 250px;
+            height: 250px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #000000;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s, color 0.3s;
+            -webkit-tap-highlight-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+        .click-button:active {
+            background-color: #cccccc;
+            transform: scale(0.95);
+            box-shadow: none;
+        }
+        section {
+            display: flex;
+            background-color: #ffffff;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            color: black;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+        }
+        .score {
+            font-size: 1.5em;
+            margin: 5px;
+        }
+        .upgrade-button {
+            font-size: 20px;
+            position: fixed;
+            background-color: #ffffff;
+            bottom: 9px;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            cursor: pointer;
+            margin-bottom: 10px;
+            width: 95%;
+            height: 65px;
+            border-radius: 15px;
+            transition: background-color 0.3s, transform 0.2s;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .upgrade-button:disabled {
+            background-color: #23272a;
+            color: #ffffff;
+            cursor: not-allowed;
+        }
+        .upgrade-button:active:not(:disabled) {
+            background-color: #99aab5;
+            color: #000000;
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <h1>Кликер</h1>
+    <button class="click-button" id="clickButton">Кликни меня!</button>
+    <section>
+    <div class="score">Очки: <span id="score">0</span></div>
+    </section>
+    <button class="upgrade-button" id="upgradeButton">Купить авто-клик (10 очков)</button>
+
+    <script>
+        let score = 0;
+        let autoClickerCost = 10;
+        let autoClickerCount = 0;
+        let autoClickerInterval = null;
+
+        const clickButton = document.getElementById('clickButton');
+        const scoreDisplay = document.getElementById('score');
+        const upgradeButton = document.getElementById('upgradeButton');
+
+        function loadGame() {
+            const savedScore = localStorage.getItem('score');
+            const savedAutoClickerCount = localStorage.getItem('autoClickerCount');
+            const savedAutoClickerCost = localStorage.getItem('autoClickerCost');
+            const savedAutoClickerInterval = localStorage.getItem('autoClickerInterval');
+
+            if (savedScore !== null) score = parseInt(savedScore, 10);
+            if (savedAutoClickerCount !== null) autoClickerCount = parseInt(savedAutoClickerCount, 10);
+            if (savedAutoClickerCost !== null) autoClickerCost = parseInt(savedAutoClickerCost, 10);
+
+            updateScore();
+            updateUpgradeButton();
+
+            if (savedAutoClickerInterval !== null) {
+                autoClickerInterval = setInterval(() => {
+                    score += autoClickerCount;
+                    updateScore();
+                    updateUpgradeButton();
+                    saveGame();
+                }, 1000);
+            }
+        }
+
+        function saveGame() {
+            localStorage.setItem('score', score);
+            localStorage.setItem('autoClickerCount', autoClickerCount);
+            localStorage.setItem('autoClickerCost', autoClickerCost);
+            localStorage.setItem('autoClickerInterval', autoClickerInterval !== null);
+        }
+
+        clickButton.addEventListener('touchstart', () => {
+            score++;
+            updateScore();
+            updateUpgradeButton();
+            saveGame();
+        });
+
+        upgradeButton.addEventListener('click', () => {
+            if (score >= autoClickerCost) {
+                score -= autoClickerCost;
+                autoClickerCount++;
+                autoClickerCost = Math.floor(autoClickerCost * 1.5);
+                updateScore();
+                updateUpgradeButton();
+                saveGame();
+                startAutoClicker();
+            }
+        });
+
+        function updateScore() {
+            scoreDisplay.innerText = score;
+        }
+
+        function updateUpgradeButton() {
+            upgradeButton.innerText = `Купить авто-клик (${autoClickerCost} очков)`;
+            upgradeButton.disabled = score < autoClickerCost;
+        }
+
+        function startAutoClicker() {
+            if (autoClickerInterval === null) {
+                autoClickerInterval = setInterval(() => {
+                    score += autoClickerCount;
+                    updateScore();
+                    updateUpgradeButton();
+                    saveGame();
+                }, 1000);
+            }
+        }
+
+        loadGame();
+    </script>
+</body>
+</html>
