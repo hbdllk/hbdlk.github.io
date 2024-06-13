@@ -22,7 +22,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            height: 90vh;
             margin: 0;
             -ms-user-select: none; 
             -moz-user-select: none; 
@@ -34,37 +34,47 @@
             margin-bottom: 20px;
         }
         .click-button {
-            background-color: #ffffff;
+            background-color: var(--tg-theme-button-color, #50a8eb);
+            color: var(--tg-theme-button-text-color, #ffffff);
             border: none;
             border-radius: 50px;
             width: 250px;
             height: 250px;
             font-size: 1.5em;
             font-weight: bold;
-            color: #000000;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s, color 0.3s;
+            transition: background-color 0.3s, color 0.3s;
             -webkit-tap-highlight-color: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            position: relative; /* Добавлено для анимации */
+            overflow: hidden; /* Добавлено для анимации */
         }
         .click-button:active {
-            background-color: #cccccc;
-            transform: scale(0.95);
-            box-shadow: none;
+            background-color: var(--tg-theme-button-color, #50a8eb);
+            color: var(--tg-theme-button-text-color, #ffffff);
+        }
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
         section {
-            display: flex;
-            background-color: #ffffff;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
-            color: black;
-            justify-content: center;
-            align-items: center;
+            display: fixed;
+            background-color: var(--tg-theme-button-color, #50a8eb);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            margin-bottom: 10px;
             border-radius: 15px;
         }
         .score {
@@ -74,19 +84,18 @@
         .upgrade-button {
             font-size: 20px;
             position: fixed;
-            background-color: #ffffff;
-            bottom: 9px;
-            color: #000000;
+            background-color: var(--tg-theme-button-color, #50a8eb);
+            color: var(--tg-theme-button-text-color, #ffffff);
             border: none;
-            padding: 10px 20px;
+            bottom: 10px;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             cursor: pointer;
-            margin-bottom: 10px;
-            width: 95%;
+            left: 10px;
+            right: 10px;
             height: 65px;
             border-radius: 15px;
             transition: background-color 0.3s, transform 0.2s;
-          -webkit-tap-highlight-color: transparent;
+            -webkit-tap-highlight-color: transparent;
         }
         .upgrade-button:disabled {
             background-color: #23272a;
@@ -98,30 +107,16 @@
             color: #000000;
             transform: scale(0.95);
         }
-        .close-button {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background-color: #ff4444;
-            border: none;
-            padding: 10px 20px;
-            color: #ffffff;
-            cursor: pointer;
-            border-radius: 15px;
-            font-size: 20px;
-        }
     </style>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <h1>HBD Coins</h1>
-    <button class="click-button" id="clickButton">Press me!</button>
     <section>
-    <div class="score"><span id="score">0</span></div>
+        <div class="score"><span id="score">0</span></div>
     </section>
+    <button class="click-button" id="clickButton">Press me!</button>
     <button class="upgrade-button" id="upgradeButton">Buy auto-clicker for 10</button>
-    <button class="close-button" id="closeButton">Close</button>
-
     <script>
         let score = 0;
         let autoClickerCost = 10;
@@ -163,8 +158,9 @@
             localStorage.setItem('autoClickerInterval', autoClickerInterval !== null);
         }
 
-        clickButton.addEventListener('touchstart', () => {
+        clickButton.addEventListener('touchstart', (event) => {
             score++;
+            createRipple(event);
             updateScore();
             updateUpgradeButton();
             saveGame();
@@ -182,10 +178,6 @@
             }
         });
 
-        closeButton.addEventListener('click', () => {
-            Telegram.WebApp.close();
-        });
-
         function updateScore() {
             scoreDisplay.innerText = score;
         }
@@ -194,6 +186,23 @@
             upgradeButton.innerText = `Buy auto-clicker (${autoClickerCost} points)`;
             upgradeButton.disabled = score < autoClickerCost;
         }
+
+        // Отключение масштабирования жестом pinch
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('gesturechange', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('gestureend', function(e) {
+            e.preventDefault();
+        });
+
+        // Дополнительно, для сенсорных устройств, отключение масштабирования через viewport meta tag
+        document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+
 
         function startAutoClicker() {
             if (autoClickerInterval === null) {
@@ -206,19 +215,32 @@
             }
         }
 
-        function initTelegramWebApp() {
-            const tg = window.Telegram.WebApp;
-            tg.expand(); // Open the web app in expanded mode
-            tg.MainButton.hide(); // Hide the main button if shown
+        function createRipple(event) {
+            const circle = document.createElement('span');
+            const diameter = Math.max(clickButton.clientWidth, clickButton.clientHeight);
+            const radius = diameter / 2;
+            const rect = clickButton.getBoundingClientRect();
 
-            // Prevent closing by swipe down on iOS
-            tg.disableClosingConfirmation();
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.touches[0].clientX - rect.left - radius}px`;
+            circle.style.top = `${event.touches[0].clientY - rect.top - radius}px`;
+            circle.classList.add('ripple');
 
-            // Show the close button
-            closeButton.style.display = 'block';
+            clickButton.appendChild(circle);
+
+            setTimeout(() => {
+                circle.remove();
+            }, 600); // Продолжительность анимации
         }
 
-        Telegram.WebApp.ready(initTelegramWebApp);
+        const tg = window.Telegram.WebApp;
+
+        tg.expand(); // Разворачивает веб-приложение на весь экран
+
+        // Автоматическое раскрытие приложения при открытии
+        document.addEventListener('DOMContentLoaded', () => {
+            tg.expand();
+        });
 
         loadGame();
     </script>
