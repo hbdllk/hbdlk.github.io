@@ -15,234 +15,311 @@
     <title>Кликер</title>
     <style>
         body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-family: Real Choice, sans-serif;
+            color: var(--tg-theme-text-color);
+            background: var(--tg-theme-secondary-bg-color);
             display: flex;
+            margin: 0;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 90vh;
-            margin: 0;
+            justify-content: flex-start;
+            -webkit-tap-highlight-color: transparent;
             -ms-user-select: none; 
             -moz-user-select: none; 
             -webkit-user-select: none; 
             user-select: none;
         }
-        h1 {
-            color: #ffffff;
-            margin-bottom: 20px;
+
+        #score-container {
+            font-family: Real Choice, sans-serif;
+            width: 100%;
+            height: 200px;
+            font-size: 100px;
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 4px -4px rgba(0, 0, 0, .2);
         }
-        .click-button {
-            background-color: var(--tg-theme-button-color, #50a8eb);
-            color: var(--tg-theme-button-text-color, #ffffff);
+
+        #game-title {
+            font-size: 36px;
+            color: var(--tg-theme-text-color);
+            margin: 0;
+        }
+
+        #score {
+            font-size: 50px;
+            color: var(--tg-theme-text-color);
+        }
+
+        #click-button {
+            font-family: Real Choice, sans-serif;
+            width: 100%;
+            height: 325px;
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
             border: none;
-            border-radius: 50px;
-            width: 250px;
-            height: 250px;
-            font-size: 1.5em;
-            font-weight: bold;
+            font-size: 24px;
             cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-            -webkit-tap-highlight-color: transparent;
+            margin-top: 13px;
+            box-shadow: 0 5px 4px -4px rgba(0, 0, 0, .2);
+        }
+
+        #settings-button {
+            font-family: Real Choice, sans-serif;
+            width: 100%;
+            height: 62px;
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 13px;
+            box-shadow: 0 5px 4px -4px rgba(0, 0, 0, .2);
+        }
+
+        #settings-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--tg-theme-secondary-bg-color);
+            color: var(--tg-theme-text-color);
+            text-align: left;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
+        }
+
+        #settings-menu button {
+            margin: 10px 0;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-destructive-text-color);
+            border: none;
+            box-shadow: 0 5px 4px -4px rgba(0, 0, 0, .2);
+            width: 100%;
+            height: 45px;
+            text-align: left;
+        }
+
+        #settings-menu .advert-button {
+            color: var(--tg-theme-text-color);
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #reset-score-button svg {
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .toggle-container {
             display: flex;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-            position: relative; /* Добавлено для анимации */
-            overflow: hidden; /* Добавлено для анимации */
+            justify-content: space-between;
+            padding: 10px;
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            box-shadow: 0 5px 4px -4px rgba(0, 0, 0, .2);
         }
-        .click-button:active {
-            background-color: var(--tg-theme-button-color, #50a8eb);
-            color: var(--tg-theme-button-text-color, #ffffff);
+
+        .toggle-container span {
+            margin-right: 16px;
         }
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background-color: rgba(0, 0, 0, 0.5);
-            transform: scale(0);
-            animation: ripple-animation 0.6s linear;
-            pointer-events: none;
+
+        .toggle-container input {
+            display: none;
         }
-        @keyframes ripple-animation {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-        section {
-            display: fixed;
-            background-color: var(--tg-theme-button-color, #50a8eb);
-            color: var(--tg-theme-button-text-color, #ffffff);
-            margin-bottom: 10px;
-            border-radius: 15px;
-        }
-        .score {
-            font-size: 1.5em;
-            margin: 5px;
-        }
-        .upgrade-button {
-            font-size: 20px;
-            position: fixed;
-            background-color: var(--tg-theme-button-color, #50a8eb);
-            color: var(--tg-theme-button-text-color, #ffffff);
-            border: none;
-            bottom: 10px;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+        .toggle-container label {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
             cursor: pointer;
-            left: 10px;
-            right: 10px;
-            height: 65px;
+        }
+
+        .toggle-container label:before,
+        .toggle-container label:after {
+            content: '';
+            position: absolute;
+        }
+
+        .toggle-container label:before {
+            width: 100%;
+            height: 100%;
+            background-color: #ccc;
             border-radius: 15px;
-            transition: background-color 0.3s, transform 0.2s;
-            -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.3s;
         }
-        .upgrade-button:disabled {
-            background-color: #23272a;
-            color: #ffffff;
-            cursor: not-allowed;
+
+        .toggle-container label:after {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
         }
-        .upgrade-button:active:not(:disabled) {
-            background-color: #99aab5;
-            color: #000000;
-            transform: scale(0.95);
+
+        .toggle-container input:checked + label:before {
+            background-color: #66bb6a;
+        }
+
+        .toggle-container input:checked + label:after {
+            transform: translateX(26px);
+        }
+
+        #notification {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
+            border-radius: 5px;
+            z-index: 1001;
         }
     </style>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <h1>HBD Coins</h1>
-    <section>
-        <div class="score"><span id="score">0</span></div>
-    </section>
-    <button class="click-button" id="clickButton">Press me!</button>
-    <button class="upgrade-button" id="upgradeButton">Buy auto-clicker for 10</button>
+    <div id="score-container">
+        <p id="score">0</p>
+    </div>
+    <button id="click-button">Кликни меня!</button>
+    <button class="image-button" id="settings-button">Настройки</button>
+
+    <div id="settings-menu">
+        <button id="reset-score-button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19.4693 6.00001V19C19.4693 20.1046 18.5738 21 17.4693 21H6.4693C5.36476 21 4.4693 20.1046 4.4693 19V6.00001M8.4693 6.00001V4C8.4693 2.89544 9.36476 2 10.4693 2H13.4693C14.5738 2 15.4693 2.89544 15.4693 4V6.00001" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Сбросить счет
+        </button>
+        <div class="toggle-container">
+            <span>Вибрация</span>
+            <input type="checkbox" id="toggle-vibration">
+            <label for="toggle-vibration"></label>
+        </div>
+        <button class="advert-button" id="more-games-button">Больше игр</button>
+    </div>
+
+    <div id="notification"></div>
+
     <script>
-        let score = 0;
-        let autoClickerCost = 10;
-        let autoClickerCount = 0;
-        let autoClickerInterval = null;
-
-        const clickButton = document.getElementById('clickButton');
-        const scoreDisplay = document.getElementById('score');
-        const upgradeButton = document.getElementById('upgradeButton');
-        const closeButton = document.getElementById('closeButton');
-
-        function loadGame() {
-            const savedScore = localStorage.getItem('score');
-            const savedAutoClickerCount = localStorage.getItem('autoClickerCount');
-            const savedAutoClickerCost = localStorage.getItem('autoClickerCost');
-            const savedAutoClickerInterval = localStorage.getItem('autoClickerInterval');
-
-            if (savedScore !== null) score = parseInt(savedScore, 10);
-            if (savedAutoClickerCount !== null) autoClickerCount = parseInt(savedAutoClickerCount, 10);
-            if (savedAutoClickerCost !== null) autoClickerCost = parseInt(savedAutoClickerCost, 10);
-
-            updateScore();
-            updateUpgradeButton();
-
-            if (savedAutoClickerInterval !== null) {
-                autoClickerInterval = setInterval(() => {
-                    score += autoClickerCount;
-                    updateScore();
-                    updateUpgradeButton();
-                    saveGame();
-                }, 1000);
-            }
-        }
-
-        function saveGame() {
-            localStorage.setItem('score', score);
-            localStorage.setItem('autoClickerCount', autoClickerCount);
-            localStorage.setItem('autoClickerCost', autoClickerCost);
-            localStorage.setItem('autoClickerInterval', autoClickerInterval !== null);
-        }
-
-        clickButton.addEventListener('touchstart', (event) => {
-            score++;
-            createRipple(event);
-            updateScore();
-            updateUpgradeButton();
-            saveGame();
-        });
-
-        upgradeButton.addEventListener('click', () => {
-            if (score >= autoClickerCost) {
-                score -= autoClickerCost;
-                autoClickerCount++;
-                autoClickerCost = Math.floor(autoClickerCost * 1.5);
-                updateScore();
-                updateUpgradeButton();
-                saveGame();
-                startAutoClicker();
-            }
-        });
-
-        function updateScore() {
-            scoreDisplay.innerText = score;
-        }
-
-        function updateUpgradeButton() {
-            upgradeButton.innerText = `Buy auto-clicker (${autoClickerCost} points)`;
-            upgradeButton.disabled = score < autoClickerCost;
-        }
-
-        // Отключение масштабирования жестом pinch
-        document.addEventListener('gesturestart', function(e) {
-            e.preventDefault();
-        });
-
-        document.addEventListener('gesturechange', function(e) {
-            e.preventDefault();
-        });
-
-        document.addEventListener('gestureend', function(e) {
-            e.preventDefault();
-        });
-
-        // Дополнительно, для сенсорных устройств, отключение масштабирования через viewport meta tag
-        document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-
-
-        function startAutoClicker() {
-            if (autoClickerInterval === null) {
-                autoClickerInterval = setInterval(() => {
-                    score += autoClickerCount;
-                    updateScore();
-                    updateUpgradeButton();
-                    saveGame();
-                }, 1000);
-            }
-        }
-
-        function createRipple(event) {
-            const circle = document.createElement('span');
-            const diameter = Math.max(clickButton.clientWidth, clickButton.clientHeight);
-            const radius = diameter / 2;
-            const rect = clickButton.getBoundingClientRect();
-
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${event.touches[0].clientX - rect.left - radius}px`;
-            circle.style.top = `${event.touches[0].clientY - rect.top - radius}px`;
-            circle.classList.add('ripple');
-
-            clickButton.appendChild(circle);
-
-            setTimeout(() => {
-                circle.remove();
-            }, 600); // Продолжительность анимации
-        }
-
         const tg = window.Telegram.WebApp;
+        let score = 0;
+        let vibrationEnabled = true;
 
-        tg.expand(); // Разворачивает веб-приложение на весь экран
+        // Функция для обновления счета на экране и в localStorage
+        const updateScore = (newScore) => {
+            score = newScore;
+            document.getElementById('score').textContent = score;
+            localStorage.setItem('score', score);
+        };
 
-        // Автоматическое раскрытие приложения при открытии
+        // Функция для обновления состояния вибрации в localStorage
+        const updateVibrationState = (enabled) => {
+            vibrationEnabled = enabled;
+            document.getElementById('toggle-vibration').checked = vibrationEnabled;
+            localStorage.setItem('vibrationEnabled', vibrationEnabled);
+        };
+
+        // Загрузка состояния из localStorage при загрузке страницы
         document.addEventListener('DOMContentLoaded', () => {
             tg.expand();
+            const savedScore = localStorage.getItem('score');
+            if (savedScore !== null) {
+                updateScore(parseInt(savedScore, 10));
+            }
+            const savedVibrationEnabled = localStorage.getItem('vibrationEnabled');
+            if (savedVibrationEnabled !== null) {
+                updateVibrationState(savedVibrationEnabled === 'true');
+            }
         });
 
-        loadGame();
+        const clickButton = document.getElementById('click-button');
+        clickButton.addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            updateScore(score + event.touches.length);
+            if (vibrationEnabled) {
+                tg.HapticFeedback.impactOccurred('light');
+            }
+        });
+
+        const settingsButton = document.getElementById('settings-button');
+        const settingsMenu = document.getElementById('settings-menu');
+        const resetScoreButton = document.getElementById('reset-score-button');
+        const toggleVibrationCheckbox = document.getElementById('toggle-vibration');
+        const moreGamesButton = document.getElementById('more-games-button');
+
+        settingsButton.addEventListener('click', () => {
+            settingsMenu.style.display = 'block';
+            tg.MainButton.show();
+            tg.MainButton.setText('Назад');
+            tg.MainButton.onClick(() => {
+                settingsMenu.style.display = 'none';
+                tg.MainButton.hide();
+            });
+        });
+
+        const showNotification = (message) => {
+            tg.showPopup({
+                title: "Уведомление",
+                message: message,
+                buttons: [{id: 'ok', type: 'default', text: 'OK'}]
+            });
+        };
+
+        resetScoreButton.addEventListener('click', () => {
+            if (score === 0) {
+                showNotification('Счет уже пустой');
+                return;
+            }
+
+            tg.showPopup({
+                title: 'Предупреждение',
+                message: 'Вы уверены, что хотите сбросить счет?',
+                buttons: [
+                    {id: 'reset', type: 'destructive', text: 'Сбросить'},
+                    {id: 'calcel', type: 'default', text: 'Отменить'}
+                ],
+                onButtonClicked: (buttonId) => {
+                    if (buttonId === 'reset') {
+                        updateScore(0);
+                        if (vibrationEnabled) {
+                            tg.HapticFeedback.impactOccurred('light');
+                        }
+                    }
+                }
+            });
+        });
+
+        toggleVibrationCheckbox.addEventListener('change', () => {
+            updateVibrationState(toggleVibrationCheckbox.checked);
+            if (vibrationEnabled) {
+                tg.HapticFeedback.impactOccurred('light');
+            }
+        });
+
+        moreGamesButton.addEventListener('click', () => {
+            tg.openLink('https://example.com');
+        });
     </script>
 </body>
 </html>
