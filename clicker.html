@@ -15,7 +15,7 @@
     <title>Кликер</title>
     <style>
         body {
-            font-family: Real Choice, sans-serif;
+            font-family: SF Pro Display, bold;
             color: var(--tg-theme-text-color);
             background: var(--tg-theme-secondary-bg-color);
             display: flex;
@@ -31,12 +31,12 @@
         }
 
         #score-container {
-            font-family: Real Choice, sans-serif;
+            font-family: SF Pro Display, bold;
             width: 100%;
             height: 200px;
             font-size: 100px;
-            background-color: var(--tg-theme-bg-color);
-            color: var(--tg-theme-text-color);
+            background-color: var(--tg-theme-section-bg-color);
+            color: var(--tg-theme-secondary-bg-color);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -56,10 +56,10 @@
         }
 
         #click-button {
-            font-family: Real Choice, sans-serif;
+            font-family: SF Pro Display, bold;
             width: 100%;
             height: 325px;
-            background-color: var(--tg-theme-bg-color);
+            background-color: var(--tg-theme-section-bg-color);
             color: var(--tg-theme-text-color);
             border: none;
             font-size: 24px;
@@ -69,10 +69,10 @@
         }
 
         #settings-button {
-            font-family: Real Choice, sans-serif;
+            font-family: SF Pro Display, bold;
             width: 100%;
             height: 62px;
-            background-color: var(--tg-theme-bg-color);
+            background-color: var(--tg-theme-section-bg-color);
             color: var(--tg-theme-text-color);
             border: none;
             font-size: 15px;
@@ -99,7 +99,7 @@
             margin: 10px 0;
             font-size: 16px;
             cursor: pointer;
-            background-color: var(--tg-theme-bg-color);
+            background-color: var(--tg-theme-section-bg-color);
             color: var(--tg-theme-destructive-text-color);
             border: none;
             box-shadow: 0 5px 4px -4px rgba(0, 0, 0, .2);
@@ -119,15 +119,20 @@
             margin-right: 8px;
             vertical-align: middle;
         }
+        #toggle-vibration svg {
+            margin-right: 8px;
+            vertical-align: middle;
+        }
 
         .toggle-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 10px;
-            background-color: var(--tg-theme-bg-color);
+            background-color: var(--tg-theme-section-bg-color);
             color: var(--tg-theme-text-color);
             box-shadow: 0 5px 4px -4px rgba(0, 0, 0, .2);
+            cursor: pointer;
         }
 
         .toggle-container span {
@@ -155,7 +160,7 @@
         .toggle-container label:before {
             width: 100%;
             height: 100%;
-            background-color: #ccc;
+            background-color: var(--tg-theme-secondary-bg-color);
             border-radius: 15px;
             transition: background-color 0.3s;
         }
@@ -163,15 +168,15 @@
         .toggle-container label:after {
             width: 20px;
             height: 20px;
-            background-color: white;
+            background-color: var(--tg-theme-section-bg-color);
             border-radius: 50%;
+            transition: transform 0.3s;
             top: 2px;
             left: 2px;
-            transition: transform 0.3s;
         }
 
         .toggle-container input:checked + label:before {
-            background-color: #66bb6a;
+            background-color: var(--tg-theme-button-color);
         }
 
         .toggle-container input:checked + label:after {
@@ -209,10 +214,15 @@
                 <path d="M10 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M14 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            Сбросить счет
+            Сброс счета не работает
         </button>
-        <div class="toggle-container">
-            <span>Вибрация</span>
+        <div class="toggle-container" id="vibration-toggle-container">
+            <span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 8.5C4.17157 8.5 3.5 9.17157 3.5 10V14C3.5 14.8284 4.17157 15.5 5 15.5H19C19.8284 15.5 20.5 14.8284 20.5 14V10C20.5 9.17157 19.8284 8.5 19 8.5H5ZM5 7H19C20.3807 7 21.5 8.11929 21.5 9.5V14.5C21.5 15.8807 20.3807 17 19 17H5C3.61929 17 2.5 15.8807 2.5 14.5V9.5C2.5 8.11929 3.61929 7 5 7ZM10.5 1C11.3284 1 12 1.67157 12 2.5V6H11V2.5C11 2.22386 10.7761 2 10.5 2C10.2239 2 10 2.22386 10 2.5V6H9V2.5C9 1.67157 9.67157 1 10.5 1ZM13 2.5C13 1.67157 13.6716 1 14.5 1C15.3284 1 16 1.67157 16 2.5V6H15V2.5C15 2.22386 14.7761 2 14.5 2C14.2239 2 14 2.22386 14 2.5V6H13V2.5ZM2 21V19H22V21H2Z" fill="currentColor"/>
+                </svg>
+                Вибрация
+            </span>
             <input type="checkbox" id="toggle-vibration">
             <label for="toggle-vibration"></label>
         </div>
@@ -270,20 +280,20 @@
 
         settingsButton.addEventListener('click', () => {
             settingsMenu.style.display = 'block';
-            tg.MainButton.show();
-            tg.MainButton.setText('Назад');
-            tg.MainButton.onClick(() => {
+            tg.BackButton.show();
+            tg.BackButton.onClick(() => {
                 settingsMenu.style.display = 'none';
-                tg.MainButton.hide();
+            tg.BackButton.hide();
             });
         });
 
         const showNotification = (message) => {
-            tg.showPopup({
-                title: "Уведомление",
-                message: message,
-                buttons: [{id: 'ok', type: 'default', text: 'OK'}]
-            });
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
         };
 
         resetScoreButton.addEventListener('click', () => {
@@ -293,17 +303,17 @@
             }
 
             tg.showPopup({
-                title: 'Предупреждение',
-                message: 'Вы уверены, что хотите сбросить счет?',
+                title: 'Ну не работает же',
+                message: 'Ты не понял чтоли?',
                 buttons: [
-                    {id: 'reset', type: 'destructive', text: 'Сбросить'},
-                    {id: 'calcel', type: 'default', text: 'Отменить'}
+                    {id: 'reset', type: 'destructive', text: 'Не пон'},
+                    {id: 'cancel', type: 'default', text: 'Пон'}
                 ],
                 onButtonClicked: (buttonId) => {
                     if (buttonId === 'reset') {
-                        updateScore(0);
+                        updateScore(score == 0);
                         if (vibrationEnabled) {
-                            tg.HapticFeedback.impactOccurred('light');
+                            tg.HapticFeedback.impactOccurred('heavy');
                         }
                     }
                 }
@@ -313,8 +323,13 @@
         toggleVibrationCheckbox.addEventListener('change', () => {
             updateVibrationState(toggleVibrationCheckbox.checked);
             if (vibrationEnabled) {
-                tg.HapticFeedback.impactOccurred('light');
+                tg.HapticFeedback.impactOccurred('soft');
             }
+        });
+
+        document.getElementById('vibration-toggle-container').addEventListener('click', () => {
+            toggleVibrationCheckbox.checked = !toggleVibrationCheckbox.checked;
+            toggleVibrationCheckbox.dispatchEvent(new Event('change'));
         });
 
         moreGamesButton.addEventListener('click', () => {
