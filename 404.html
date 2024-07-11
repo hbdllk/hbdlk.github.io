@@ -1,48 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Код страницы 404</title>
-<style>
-html { height: 100%; }
-body {
-  background: url(files/404.png) no-repeat;
-  background-size: cover; /* Масштабирует картинку сохраняя пропорции */
+  <meta charset="utf-8">
+  <title>Код страницы 404</title>
+  <style>
+    html { height: 100%; }
+    body {
+      background-color: #fff;
+      font-family: SF Pro Display, bold;
+      -webkit-tap-highlight-color: transparent;
+      -ms-user-select: none; 
+      -moz-user-select: none; 
+      -webkit-user-select: none; 
+      user-select: none;
   }
-.over {
-  background: rgba(0, 0, 0, 0.7); /* Цвет фона и значение прозрачности */
-  position: absolute; /* Абсолютное позиционирование */
-  left: 0; right: 0; top: 0; bottom: 0; /* Отступы от краев браузера */
+    .over {
+      background: rgba(0, 0, 0, 0.7); /* Цвет фона и значение прозрачности */
+      position: absolute; /* Абсолютное позиционирование */
+      left: 0; right: 0; top: 0; bottom: 0; /* Отступы от краев браузера */
   }
-.404 {
-  margin-top: 100px;
-  text-align: center; /* Выравнивание текста по центру */
-  font-size: 10em;
-  color: #fcf9f9;
-  position: relative; /* Относительное позиционирование */
-  z-index: 2; /* Порядок наложения элемента по высоте */
+    .a404 {
+      margin-top: 100px;
+      text-align: center; /* Выравнивание текста по центру */
+      font-size: 10em;
+      color: #fcf9f9;
+      position: relative; /* Относительное позиционирование */
+      z-index: 2; /* Порядок наложения элемента по высоте */
   }
-.notfound {
-  text-align: center;
-  color: #fff;
-  font-size: 2em;
-  position: relative; /* Относительное позиционирование */
-  z-index: 2; /* Порядок наложения элемента по слоям в глубину */
+    .notfound {
+      text-align: center;
+      color: #fff;
+      font-size: 2em;
+      position: relative;
   }
-.notfound a {
-  color: #fff;
-  font-size: 0.8em;
+    .notfound a {
+      color: #fff;
+      font-size: 0.8em;
   }
-.notfound a:hover {
-  color: yellow;
-  text-decoration: none;
+    .notfound a:hover {
+      color: gray;
+      text-decoration: none;
+      transform: scale(1.1);
   }
 </style>
 </head>
 <body>
 <div class="over"></div>
-<div class="404">404</div>
-<div class="notfound">страница не найдена<br>
+<div class="a404">404</div>
+<div class="notfound">Cтраница не найдена<br>
 <a href="https://hbdlk.ru"> перейти на главную страницу..</a>
 </div>
 </body>
