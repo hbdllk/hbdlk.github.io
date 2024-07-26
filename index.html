@@ -16,9 +16,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             scroll-behavior: smooth;
+            margin: 20px;
             transition: background-color 0.3s ease, color 0.3s ease;
             -ms-user-select: none; 
             -moz-user-select: none; 
@@ -26,121 +25,87 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
-        body.dark-mode {
-            background-color: #000;
-            color: #fff;
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #000;
+                color: #fff;
+            }
+            header {
+                background-color: #333;
+            }
+            section {
+                background-color: #111;
+            }
         }
-        body.light-mode {
-            background-color: #fff;
-            color: #000;
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: #fff;
+                color: #000;
+            }
+            header {
+                background-color: #f0f0f0;
+            }
+            section {
+                background-color: #f0f0f0;
+            }
         }
         header {
-            background-color: #333;
             padding: 20px;
             text-align: center;
+            margin-bottom: 20px;
             border-radius: 10px;
-            margin: 20px;
             transition: background-color 0.3s ease;
             position: relative;
             -webkit-tap-highlight-color: transparent;
-        }
-        header.dark-mode {
-            background-color: #333;
-        }
-        header.light-mode {
-            background-color: #f0f0f0;
         }
         header h1 {
             margin: 0;
             font-size: 2em;
             display: inline-block;
         }
-        .theme-toggle-btn {
-            position: absolute;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #fff;
-            font-size: 20px;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .c-button {
-            appearance: none;
-            border: 0;
-            border-radius: 5px;
-            background: #777b7e;
-            color: #fff;
-            padding: 8px 16px;
-            font-size: 16px;
-            min-width: 100px;
-            margin: 0;
-            position: static;
-            transition: all 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .c-button:hover {
-            background: #363636;
-            transform: scale(1.05);
-        }
-        .c-button:focus {
-            outline: none;
-            transform: scale(1.05);
-        }
-        nav {
-            display: flex;
-            justify-content: space-between;
-            border-radius: 10px;
-            margin: 20px;
-            position: static;
-            transition: all 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
-        nav.dark-mode {
-            background-color: #222;
-        }
-        nav.light-mode {
-            background-color: #f0f0f0;
-        }
-        nav.fixed {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            margin: 0;
-            border-radius: 0;
-            z-index: 1000;
-        }
-        nav a {
-            color: #fff;
-            padding: 14px 20px;
-            text-decoration: none;
-            text-align: center;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-        nav.dark-mode a {
-            color: #fff;
-        }
-        nav.light-mode a {
-            color: #000;
-        }
-        nav a:hover {
-            background-color: #444;
-            transform: scale(1.1);
-        }
-        section {
+        .button {
             padding: 20px;
-            margin: 20px;
+            margin: 0px 0px 20px 0px;
             border-radius: 10px;
-            background-color: #111;
             transition: background-color 0.3s ease;
         }
-        section.dark-mode {
-            background-color: #111;
+        .button:active {
+            background: #363636;
         }
-        section.light-mode {
-            background-color: #f0f0f0;
+        .btn {
+            padding: 20px;
+            margin: 0px 20px 20px 20px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+        button {
+            padding: 20px;
+            border: none;
+            color: #fff;
+            background-color: #111;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        button:active {
+            background: #363636;
+        }
+        section {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+        menu {
+            background-color: #333;
+            position: sticky;
+            padding: 20px;
+            margin: 0px 0px 20px 0px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+            top: 20px;
         }
         .profile-pic {
             display: block;
@@ -151,8 +116,9 @@
             transition: transform 0.3s ease;
             -webkit-tap-highlight-color: transparent;
         }
-        .profile-pic:hover {
+        .profile-pic:active {
             transform: scale(1.1);
+            
         }
         ul {
             list-style: none;
@@ -160,6 +126,9 @@
         }
         li {
             margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            background: #000;
         }
         a {
             color: #777b7e;
@@ -167,8 +136,8 @@
             transition: color 0.3s ease;
             -webkit-tap-highlight-color: transparent;
         }
-        a:hover {
-            color: #777b7e;
+        a:active {
+            color: #000000;
         }
         .footer {
             text-align: center;
@@ -204,44 +173,46 @@
         }
     </style>
 </head>
-<body class="dark-mode">
+<body>
     <div id="preloader">
         <div class="spinner"></div>
     </div>
-    <header class="dark-mode">
+    <header>
         <h1>hbdlk</h1>
-        <div class="theme-toggle-btn" onclick="toggleTheme()">🌙</div>
     </header>
-    <nav id="navbar" class="dark-mode">
-        <a href="#home">Главная</a>
-        <a href="#projects">Проекты</a>
-        <a href="#contact">Контакты</a>
-    </nav>
-    <section id="home" class="dark-mode">
+    <menu>asdsdasd</menu>
+    <section id="home">
         <h2>Главная</h2>
-        <img src="https://i.postimg.cc/vT4VCpXY/1000004461-x16-drawing.jpg" alt="Profile Picture" class="profile-pic">
-        <p>Добро пожаловать на сайт <a href="https://t.me/hbdlk" style="color: #777b7e;">hbdlk</a></p>
+        <img src="" alt="Hui" class="profile-pic">
     </section>
-    <section id="projects" class="dark-mode">
+    
+    <section onclick="document.location='https://hbdlk.ru/products'" class='button'>
+        <h2>Магазин</h2>
+    </section>
+    <section onclick="document.location='https://hbdlk.ru/blog'" class='button'>
+        <h2>Блог</h2>
+    </section>
+    <section id="projects">
         <h2>Мои проекты</h2>
         <ul>
             <li><a href="https://t.me/chathbdbot" target="_blank">ТГ Бот с Искусственным Интеллектом</a></li>
-            <li><a href="https://t.me/+yPpWxN1FNyVmNWYy" target="_blank">ТГ Канал</a></li>
-            <li><a href="https://www.youtube.com/@hbdlk" target="_blank">Ютуб Канал</a></li>
-            <li>А дальше -> больше...</li>
+            <li><a href="https://t.me/hbdlk_ru" target="_blank">ТГ Канал</a></li>
+            <li><a href="https://youtube/@hbdlk" target="_blank">Ютуб Канал</a></li>
+            <li>...</li>
         </ul>
     </section>
-    <section id="contact" class="dark-mode">
+    <section id="contact">
         <h2>Контакты</h2>
         <p>Свяжитесь со мной с помощью:</p>
-        <p>Телеграм - <a href="https://t.me/m/EXLvAXcyMjU6" style="color: #777b7e;">Написать</a></p>
-        <p>ВКонтакте - <a href="https://vk.com/@hbdlk" style="color: #777b7e;">Профиль</a></p>
-        <p>Mail - <a href="mailto:h@bdlk.ru" style="color: #777b7e;">Почта</a></p>
+        <a href="" style="color: #777b7e;">Tелеграм</a></p>
+        <a href="" style="color: #777b7e;">ВКонтакте</a></p>
+         <a href="" style="color: #777b7e;">Почта</a></p>
     </section>
-    <section id="about" class="dark-mode">
-        <h2>Good luck</h2>
-        <p class="footer">&copy; 2024 hbdlk</p>
+    <section id="about">
+        <h2>hbdlk</h2>
+        <p class="footer">&copy; 2024</p>
     </section>
+    
     <script>
         // JavaScript для плавного скроллинга
         document.querySelectorAll('nav a').forEach(anchor => {
@@ -252,28 +223,6 @@
                 });
             });
         });
-        // JavaScript для фиксированной навигации при прокрутке
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            const header = document.querySelector('header');
-            const sticky = header.offsetHeight + 20;
-
-            if (window.pageYOffset >= sticky) {
-                navbar.classList.add('fixed');
-            } else {
-                navbar.classList.remove('fixed');
-            }
-        });
-
-        // Смена темы
-        function toggleTheme() {
-            const elements = document.querySelectorAll('body, header, nav, section');
-            elements.forEach(element => {
-                element.classList.toggle('dark-mode');
-                element.classList.toggle('light-mode');
-            });
-        }
-
         // Скрытие preloader после загрузки страницы
         window.addEventListener('load', function() {
             const preloader = document.getElementById('preloader');
