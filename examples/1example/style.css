@@ -162,7 +162,6 @@ IMG.arrow {
 }
 
 .link1:active {
-    color: #868686;
     background-color: #ff6c1d;
     transform: scale(0.9)
 }
