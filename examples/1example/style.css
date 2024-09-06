@@ -139,6 +139,7 @@ IMG.arrow {
 
 IMG.arrow:hover {
     transform: scale(1.1);
+}
 
 .link1 {
     color: #ff7e36;
