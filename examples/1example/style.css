@@ -138,6 +138,10 @@ IMG.arrow {
     transition: 0.3s ease;
 }
 
+IMG.arrow:hover {
+    transform: scale(1.1);
+}
+
 .link1 {
     color: #ff7e36;
     background-color: #fff;
