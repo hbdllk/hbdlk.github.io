@@ -1,12 +1,6 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: Montserrant;  /* Здесь можно изменить шрифт. При появлении желании, убрать строку */
-    -ms-user-select: none; 
-    -moz-user-select: none; 
-    -webkit-user-select: none; 
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
 }
 
 .main {
