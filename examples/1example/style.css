@@ -134,7 +134,11 @@ IMG.castle {
 
 IMG.arrow {
     margin: 40px 0px 0px 60px;
+    transition: 0.3s ease;
 }
+
+IMG.arrow:hover {
+    transform: scale(1.1);
 
 .link1 {
     color: #ff7e36;
