@@ -7,6 +7,7 @@ body {
     font-family: "Noto Sans", sans-serif;
 }
 
+/* Загрузка шрифта */
 @font-face {
     font-family: 'Recoleta';
     src: url('./font/Recoleta-Bold.eot');
@@ -27,9 +28,9 @@ a {
     text-decoration: none;
 }
 
+/* Убираем маркеры */
 li {
     list-style-type: none;
-    /* Убираем маркеры */
 }
   
 ul {
@@ -185,6 +186,7 @@ ul {
     margin-bottom: 28px;
 }
 
+/* 4. Начало четвертой секции */
 .fourth-section {
     background-color: #F2EFE6;
     color: #163A24;
@@ -203,6 +205,7 @@ ul {
     margin-bottom: 120px;
 }
 
+/* 5. Начало пятой секции */
 .fifth-section {
     color: #163A24;
 }
@@ -216,13 +219,6 @@ ul {
 .fifth-section__box_text {
     margin: 0px 98px 0px 98px;
 }
-
-
-
-
-
-
-
 
 /* Начало футера, конец сайта */
 .footer__logos {
