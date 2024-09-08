@@ -1,0 +1,277 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: "Noto Sans", sans-serif;
+}
+
+@font-face {
+    font-family: 'Recoleta';
+    src: url('./font/Recoleta-Bold.eot');
+    src: local('Recoleta Bold'), local('Recoleta-Bold'),
+        url('./font/Recoleta-Bold.eot?#iefix') format('embedded-opentype'),
+        url('./font/Recoleta-Bold.woff') format('woff'),
+        url('./font/Recoleta-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+  
+.header {
+    background-color: #163A24;
+    color: #FBFAF7;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style-type: none;
+    /* Убираем маркеры */
+}
+  
+ul {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.container {
+    max-width: 1220px;
+    padding: 0px 20px;
+    margin: 0 auto;
+    background-color: rgba(0,0,0,0);
+}
+
+.header__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.header__link {
+    color: #FBFAF7;
+}
+
+.header__buttons {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.btn {
+    background-color: #198C36;
+    padding: 15px 25px;
+    border-radius: 160px;
+    cursor: pointer;
+}
+
+/* 1. Начало первой секции */
+.first-section {
+    background-color: #163A24;
+    height: 544px;
+    background-image: url(./img/first-section/fon.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 0%;
+}
+
+.first-section__text-block {
+    color: #FBFAF7;
+    max-width: 475px;
+    padding-top: 120px;
+}
+
+.section__title {
+    font-size: 48px;
+    font-weight: 900;
+    margin-bottom: 20px;
+    font-family: "Recoleta";
+}
+
+.section__sub-title {
+    font-size: 18px;
+}
+
+/* 2. Начало второй секции */
+.second-section {
+    background-color: rgb(0, 0, 0);
+    margin-top: 120px;
+    margin-bottom: 120px;
+}
+
+/*/2/ Начало первой части */
+.second-section__woman-box {
+    margin-top: 120px;
+    display: flex;
+}
+
+.second-section__woman-box_image {
+    margin-left: 98px;
+}
+
+.second-section__woman-box_text-box {
+    margin: 154.77px 0px 0px 98px;
+    color: #163A24;
+}
+
+/*/2/ Начало второй части */
+.second-section__man-box {
+    display: flex;
+    color: #163A24;
+}
+
+.second-section__man-box_text-box {
+    margin: 111.44px 98px 0px 98.34px;
+}
+
+/*/2/ Начало третьей части */
+.second-section__logos-box {
+    text-align: center;
+    color: #163A24;
+}
+
+.second-section__logos-box_title {
+    font-size: 48px;
+    font-weight: bold;
+    margin-top: 113.52px;
+    margin-bottom: 60px;
+    font-family: "Recoleta";
+}
+
+.second-section__logos-box_logos-box {
+    max-width: 900px;
+    margin: 0 auto 120px auto;
+}
+
+.second-section__logos-box_logos-box ul{
+    display: flex;
+    align-items: center;
+    gap: 87px;
+}
+
+/* 3. Начало третьей секции */
+.third-section {
+    background-color: #163A24;
+    color: #fff;
+}
+
+.third-section__title {
+    color: #ffffff;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 66px;
+    margin-bottom: 74px;
+    font-family: "Recoleta";
+}
+
+.third-section__ul ul{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    gap: 0;
+    max-width: 1180px;
+    margin: 0 auto 120px auto;
+}
+
+.third-section__li {
+    width: 295px;
+}
+
+.third-section__li_pic {
+    margin-bottom: 28px;
+}
+
+.fourth-section {
+    background-color: #F2EFE6;
+    color: #163A24;
+    text-align: center;
+}
+
+.fourth-section__title {
+    font-size: 48px;
+    font-weight: bold;
+    margin-top: 120px;
+    margin-bottom: 20px;
+    font-family: "Recoleta";
+}
+
+.fourth-section__pic {
+    margin-bottom: 120px;
+}
+
+.fifth-section {
+    color: #163A24;
+}
+
+.fifth-section__box {
+    display: flex;
+    max-width: 1180px;
+    margin: 100px auto 0px auto;
+}
+
+.fifth-section__box_text {
+    margin: 0px 98px 0px 98px;
+}
+
+
+
+
+
+
+
+
+/* Начало футера, конец сайта */
+.footer__logos {
+    cursor: pointer;
+}
+
+.footer__logos ul{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.footer__1-part {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 84px;
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.footer__1-part_title {
+    color: #163A24;
+    font-family: "Recoleta";
+}
+
+.footer__2-part {
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer__stick-separator {
+    background-color: #F2EFE6;
+    height: 1px;
+}
+
+.footer__2-part_green ul{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.footer__2-part_gray {
+    color: #163A24;
+}
+
+.footer__2-part_link {
+    color: #198C36;
+}
