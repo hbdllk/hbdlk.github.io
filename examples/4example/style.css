@@ -55,7 +55,7 @@ input:focus {
   font-size: 16px;
 }
 .header__link:hover {
-  color: red;
+  color: #1f3a33;
 }
 .header__item {
   margin-right: 30px;
