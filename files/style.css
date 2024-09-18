@@ -107,9 +107,6 @@ a {
 }
 .main__card:hover {
   outline: 10px solid #fff;
-  @media (max-width: 960px) {
-    outline: 0;
-  }
 }
 .main__card:active {
   transform: scale(0.95);
