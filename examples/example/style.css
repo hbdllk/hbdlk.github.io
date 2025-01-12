@@ -3,8 +3,8 @@
   margin: 0;
   color: #fff;
   -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
 body {
@@ -21,12 +21,12 @@ a {
 
 @font-face {
   font-family: Inria;
-  src: url(../fonts/InriaSerif-Regular.ttf);
+  src: url(./InriaSerif-Regular.ttf);
   font-weight: 400;
 }
 @font-face {
   font-family: Inria;
-  src: url(../fonts/InriaSerif-Light.ttf);
+  src: url(./InriaSerif-Light.ttf);
   font-weight: 300;
 }
 .container {
